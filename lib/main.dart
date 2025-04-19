@@ -1,9 +1,8 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:cash_cat/src/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(const MainApp());
 }
 
@@ -12,8 +11,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
+    return MaterialApp(
+      home: AnimatedSplashScreen(
+        duration: 8000,
+        splash: Image.asset("asset/images/logo2.png"),
+        splashIconSize: 130,
+
+        nextScreen: HomeScreen(),
+        backgroundColor: Color(0xFFEAFFFE),
+      ),
     );
   }
 }

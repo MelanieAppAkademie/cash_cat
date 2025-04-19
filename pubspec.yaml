@@ -7,9 +7,9 @@ environment:
   sdk: ^3.7.0
 
 dependencies:
+  animated_splash_screen: ^1.3.0
   flutter:
     sdk: flutter
-  flutter_native_splash: ^2.4.6
 
 dev_dependencies:
   flutter_test:
@@ -18,3 +18,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - asset/
+    - asset/images/
+    - asset/fonts/
+
+  fonts:
+    - family: Fjalla One
+      fonts:
+        - asset: asset/fonts/Fjalla_One/FjallaOne-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: asset/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf

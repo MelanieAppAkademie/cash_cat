@@ -4,6 +4,7 @@ import 'package:cash_cat/src/domain/bankaccount/transaction.dart';
 import 'package:cash_cat/src/domain/user/user.dart';
 
 class Account {
+  // Eigenschaften einer Klasse
   final String accountNo;
   double? accountBalance = 0.0;
   final String accountType;
@@ -13,6 +14,7 @@ class Account {
   Card? card;
   final Bank bank;
 
+  // Konstruktor (Bauplan)
   Account({
     required this.accountNo,
     this.accountBalance,
