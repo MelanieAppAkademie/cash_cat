@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 class CustomCircleAvatar extends StatelessWidget {
   final String? url;
-  const CustomCircleAvatar({super.key, this.url});
+  final double? size;
+  const CustomCircleAvatar({super.key, this.url, this.size});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      width: 40,
+      height: size ?? 40,
+      width: size ?? 40,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(50)),

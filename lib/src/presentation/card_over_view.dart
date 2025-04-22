@@ -26,14 +26,10 @@ class CardOverView extends StatelessWidget {
 
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: height / 4),
-          child: CarouselView(
-            elevation: 1,
-            itemExtent: 360,
-            shrinkExtent: 230,
-            children: List<Widget>.generate(
-              cards.length,
-              (int index) => CardView(card: cards[index]),
-            ),
+          child: ListView.builder(
+            itemCount: cards.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => CardView(card: cards[index]),
           ),
         ),
       ],

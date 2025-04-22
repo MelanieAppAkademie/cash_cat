@@ -2,7 +2,6 @@ import 'package:cash_cat/src/domain/bankaccount/transaction.dart';
 import 'package:cash_cat/src/domain/user/user.dart';
 import 'package:cash_cat/src/presentation/background.dart';
 import 'package:cash_cat/src/presentation/card_over_view.dart';
-import 'package:cash_cat/src/presentation/card_view.dart';
 import 'package:cash_cat/src/presentation/depot_view.dart';
 import 'package:cash_cat/src/presentation/nav_bar_profile.dart';
 import 'package:cash_cat/src/presentation/recent_transactions.dart';
@@ -141,7 +140,10 @@ class HomeScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: RecentTransactions(),
+                  child: RecentTransactions(
+                    accountUser: account1,
+                    transaction: transactions.first,
+                  ),
                 ),
               ],
             ),
@@ -159,16 +161,18 @@ class TransactionsOverView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Letzte Transaktionen")),
-      body: ListView.builder(
-        itemCount: transactions.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: Icon(Icons.person),
-            title: Text(account1.name),
-            subtitle: Text(transactions[index].description),
-            trailing: Text(transactions[index].amount.toString()),
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          padding: EdgeInsets.all(2),
+          itemCount: transactions.length,
+          itemBuilder: (context, index) {
+            return TransactionView(
+              transaction: transactions[index],
+              accountUser: account1,
+            );
+          },
+        ),
       ),
     );
   }

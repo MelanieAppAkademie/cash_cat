@@ -8,76 +8,90 @@ class CardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isCreditCard = card is CreditCard;
-    return Container(
-      decoration: BoxDecoration(
-        color: (isCreditCard) ? Color(0xFFB7C3FF) : Color(0xFFFFB7E9),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
       child: Container(
-        padding: EdgeInsets.all(16),
+        height: 200,
+        width: 365,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            colors:
-                (isCreditCard)
-                    ? [
-                      Color(0xFF5EF8D9).withAlpha(100),
-                      Colors.white.withAlpha(4),
-                    ]
-                    : [
-                      Color(0xFFF88D5E).withAlpha(100),
-                      Colors.white.withAlpha(4),
-                    ],
-          ),
+          borderRadius: BorderRadius.circular(20),
+          color: (isCreditCard) ? Color(0xFFB7C3FF) : Color(0xFFFFB7E9),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  (card is CreditCard) ? "Kreditkarte" : "Girocard",
-                  style: TextStyle(fontFamily: "Roboto", fontSize: 18),
-                ),
-                if (isCreditCard)
+        child: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              colors:
+                  (isCreditCard)
+                      ? [
+                        Color(0xFF5EF8D9).withAlpha(100),
+                        Colors.white.withAlpha(4),
+                      ]
+                      : [
+                        Color(0xFFF88D5E).withAlpha(100),
+                        Colors.white.withAlpha(4),
+                      ],
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Text(
-                    (card as CreditCard).expirationDate,
+                    (card is CreditCard) ? "Kreditkarte" : "Girocard",
                     style: TextStyle(fontFamily: "Roboto", fontSize: 18),
                   ),
-              ],
-            ),
-            Spacer(),
-            Text(
-              card.cardNumber,
-              style: TextStyle(
-                fontFamily: "Roboto",
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  card.cardHolder,
-                  style: TextStyle(fontFamily: "Roboto", fontSize: 18),
-                ),
-                if (isCreditCard)
-                  GestureDetector(
-                    onLongPress: () {},
-                    child: Row(
-                      spacing: 8,
-                      children: [
-                        Icon(Icons.visibility_outlined, color: Colors.blueGrey),
-                        Text("CVV", style: TextStyle(color: Colors.blueGrey)),
-                      ],
+                  if (isCreditCard)
+                    Text(
+                      (card as CreditCard).expirationDate,
+                      style: TextStyle(fontFamily: "Roboto", fontSize: 18),
                     ),
+                ],
+              ),
+              Spacer(),
+              Text(
+                card.cardNumber,
+                style: TextStyle(
+                  fontFamily: "Roboto",
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    card.cardHolder,
+                    style: TextStyle(fontFamily: "Roboto", fontSize: 18),
                   ),
-              ],
-            ),
-          ],
+                  if (isCreditCard)
+                    GestureDetector(
+                      onLongPress: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text((card as CreditCard).cvv)),
+                        );
+                      },
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          Icon(
+                            Icons.visibility_outlined,
+                            color: Colors.blueGrey,
+                          ),
+                          Text("CVV", style: TextStyle(color: Colors.blueGrey)),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

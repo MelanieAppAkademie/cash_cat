@@ -1,9 +1,16 @@
-import 'package:cash_cat/src/presentation/home_screen.dart';
+import 'package:cash_cat/src/domain/bankaccount/transaction.dart';
+import 'package:cash_cat/src/domain/user/user.dart';
 import 'package:cash_cat/src/presentation/transaction_view.dart';
 import 'package:flutter/material.dart';
 
 class RecentTransactions extends StatelessWidget {
-  const RecentTransactions({super.key});
+  final AccountUser? accountUser;
+  final Transaction transaction;
+  const RecentTransactions({
+    super.key,
+    this.accountUser,
+    required this.transaction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class RecentTransactions extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        TransactionView(transaction: transaction, accountUser: account1),
+        TransactionView(transaction: transaction, accountUser: accountUser!),
       ],
     );
   }
