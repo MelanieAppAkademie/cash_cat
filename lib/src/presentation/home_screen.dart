@@ -1,9 +1,100 @@
+import 'package:cash_cat/src/domain/bankaccount/transaction.dart';
+import 'package:cash_cat/src/domain/user/user.dart';
 import 'package:cash_cat/src/presentation/background.dart';
+import 'package:cash_cat/src/presentation/card_over_view.dart';
 import 'package:cash_cat/src/presentation/card_view.dart';
 import 'package:cash_cat/src/presentation/depot_view.dart';
 import 'package:cash_cat/src/presentation/nav_bar_profile.dart';
+import 'package:cash_cat/src/presentation/recent_transactions.dart';
 import 'package:cash_cat/src/presentation/transaction_view.dart';
 import 'package:flutter/material.dart';
+
+Transaction transaction = Transaction(
+  id: "123",
+  accountId: "2",
+  amount: -16.00,
+  date: DateTime.now(),
+  description: "Lunch Moneten 🍔",
+);
+
+AccountUser account1 = AccountUser(
+  id: "2",
+  name: "Simon Vogel",
+  username: "simonElias",
+  avatarUrl:
+      "https://images.unsplash.com/photo-1508341591423-4347099e1f19?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  email: "sv@appakademie",
+  accounts: [],
+);
+
+AccountUser account2 = AccountUser(
+  id: "1",
+  name: "Melanie",
+  username: "Melli",
+  avatarUrl:
+      "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=80&w=1727&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  email: "Melli@app.com",
+  accounts: [],
+);
+
+List<Transaction> transactions = [
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: 32.00,
+    date: DateTime.now(),
+    description: "Lunch Moneten 🍔",
+  ),
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: -16.00,
+    date: DateTime.now(),
+    description: "Lunch Moneten 🍔",
+  ),
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: 100.00,
+    date: DateTime.now(),
+    description: "Rechnung von März 2025",
+  ),
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: 4.00,
+    date: DateTime.now(),
+    description: "Taschengeld",
+  ),
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: 32.00,
+    date: DateTime.now(),
+    description: "Lunch Moneten 🍔",
+  ),
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: -16.00,
+    date: DateTime.now(),
+    description: "Lunch Moneten 🍔",
+  ),
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: 100.00,
+    date: DateTime.now(),
+    description: "Rechnung von März 2025",
+  ),
+  Transaction(
+    id: "123",
+    accountId: "2",
+    amount: 4.00,
+    date: DateTime.now(),
+    description: "Taschengeld",
+  ),
+];
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,7 +106,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Color(0xFFEAFFFE),
 
         actions: [
-          NavBarProfile(),
+          NavBarProfile(url: account2.avatarUrl),
           IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
           IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
         ],
@@ -32,7 +123,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DepotView(),
-                CardView(),
+                CardOverView(),
                 Text(
                   "Letzte Transaktionen",
                   style: TextStyle(
@@ -41,7 +132,17 @@ class HomeScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                RecentTransactions(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TransactionsOverView(),
+                      ),
+                    );
+                  },
+                  child: RecentTransactions(),
+                ),
               ],
             ),
           ),
@@ -51,39 +152,24 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class RecentTransactions extends StatelessWidget {
-  const RecentTransactions({super.key});
+class TransactionsOverView extends StatelessWidget {
+  const TransactionsOverView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.topCenter,
-      children: [
-        Container(
-          height: 95,
-          width: 350,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.2),
-                blurRadius: 5,
-                offset: Offset(0, 5),
-              ),
-            ],
-            color: Color.fromARGB(255, 210, 210, 210),
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        Container(
-          height: 85,
-          width: 360,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 236, 236, 236),
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        TransactionView(),
-      ],
+    return Scaffold(
+      appBar: AppBar(title: Text("Letzte Transaktionen")),
+      body: ListView.builder(
+        itemCount: transactions.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.person),
+            title: Text(account1.name),
+            subtitle: Text(transactions[index].description),
+            trailing: Text(transactions[index].amount.toString()),
+          );
+        },
+      ),
     );
   }
 }

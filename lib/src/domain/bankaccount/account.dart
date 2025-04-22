@@ -9,7 +9,7 @@ class Account {
   final String accountType;
   double? dispo = 0.0;
   List<Transaction> transactions;
-  Card? card;
+  BankCard? card;
   final Bank bank;
 
   // Konstruktor (Bauplan)

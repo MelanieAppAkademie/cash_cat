@@ -1,13 +1,26 @@
-import 'package:cash_cat/src/domain/user/user.dart';
+abstract class BankCard {
+  String cardHolder;
+  String cardNumber;
 
-abstract class Card {
-  final String cardNo;
-  final DateTime? expirationDate;
-  final AccountUser cardHolderName;
+  BankCard(this.cardHolder, this.cardNumber);
+}
 
-  Card(
-    this.expirationDate, {
-    required this.cardNo,
-    required this.cardHolderName,
-  });
+class Girocard extends BankCard {
+  double dispo;
+
+  Girocard(super.cardHolder, super.cardNumber, this.dispo);
+}
+
+class CreditCard extends BankCard {
+  double limit;
+  String expirationDate;
+  String cvv;
+
+  CreditCard(
+    super.cardHolder,
+    super.cardNumber,
+    this.limit,
+    this.expirationDate,
+    this.cvv,
+  );
 }

@@ -1,10 +1,24 @@
+import 'package:cash_cat/src/domain/bankaccount/transaction.dart';
+import 'package:cash_cat/src/domain/user/user.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionView extends StatelessWidget {
-  const TransactionView({super.key});
+  final Transaction transaction;
+  final AccountUser accountUser;
+  const TransactionView({
+    super.key,
+    required this.transaction,
+    required this.accountUser,
+  });
 
   @override
   Widget build(BuildContext context) {
+    bool isPositiveAmount = transaction.amount > 0;
+    final formattedAmount = NumberFormat.currency(
+      locale: "de_DE",
+      symbol: "€",
+    ).format(transaction.amount);
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -29,7 +43,8 @@ class TransactionView extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(50)),
             ),
             child: Image.network(
-              "https://images.unsplash.com/photo-1508341591423-4347099e1f19?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              accountUser.avatarUrl ??
+                  "https://www.kidway.shop/wp-content/uploads/yith-wcmv-uploads/vendor-avatar-placeholder.png",
               fit: BoxFit.cover,
             ),
           ),
@@ -38,17 +53,24 @@ class TransactionView extends StatelessWidget {
                 CrossAxisAlignment.start, // Ensures leading alignment
             children: [
               Text(
-                "Simon Vogel",
+                accountUser.name,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               Text(
-                "Lunch Moneten",
+                transaction.description,
                 style: TextStyle(fontSize: 16, color: Color(0xFF8C8B8B)),
               ),
             ],
           ),
           Spacer(),
-          Text("+16.00 €"),
+          Text(
+            isPositiveAmount ? "+ $formattedAmount" : formattedAmount,
+
+            style: TextStyle(
+              color: isPositiveAmount ? Colors.green : Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
