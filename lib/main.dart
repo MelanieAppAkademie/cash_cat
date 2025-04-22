@@ -3,7 +3,7 @@ import 'package:cash_cat/src/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
